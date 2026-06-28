@@ -6,7 +6,6 @@ import mz.ebooks.auth.dto.LoginRequest;
 import mz.ebooks.auth.dto.UserDto;
 import mz.ebooks.auth.entity.EmailVerification;
 import mz.ebooks.auth.entity.PasswordReset;
-import mz.ebooks.auth.entity.RefreshToken;
 import mz.ebooks.auth.entity.User;
 import mz.ebooks.auth.messaging.AuthEventPublisher;
 import mz.ebooks.auth.repository.*;

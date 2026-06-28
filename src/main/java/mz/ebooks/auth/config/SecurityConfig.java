@@ -34,6 +34,8 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET,  "/auth/verify-email").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/forgot-password").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/reset-password").permitAll()
+                        // Internal service-to-service endpoints (network-isolated, not routed via gateway)
+                        .requestMatchers("/auth/internal/**").permitAll()
                         // OAuth2 flow paths
                         .requestMatchers("/oauth2/**", "/login/oauth2/**").permitAll()
                         // Actuator & API docs
