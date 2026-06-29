@@ -31,8 +31,15 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public Page<UserDto> listUsers(Pageable pageable) {
-        return userRepository.findAll(pageable).map(this::toDto);
+    public Page<UserDto> listUsers(String search, Pageable pageable) {
+        return userRepository.searchUsers(search, pageable).map(this::toDto);
+    }
+
+    @Transactional
+    public UserDto setActive(UUID userId, boolean active) {
+        User user = findById(userId);
+        user.setActive(active);
+        return toDto(userRepository.save(user));
     }
 
     @Transactional
@@ -110,6 +117,7 @@ public class UserService {
                 .avatar(user.getAvatar())
                 .role(user.getRole())
                 .emailVerified(user.getEmailVerified())
+                .active(user.isActive())
                 .build();
     }
 }

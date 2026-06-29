@@ -17,4 +17,5 @@ public class UserDto {
     private String avatar;
     private String role;
     private LocalDateTime emailVerified;
+    private boolean active;
 }

@@ -22,9 +22,10 @@ public class AdminUserController {
     @GetMapping
     public ResponseEntity<Page<UserDto>> listUsers(
             @RequestHeader(value = "X-User-Role", defaultValue = "") String role,
+            @RequestParam(required = false) String search,
             @PageableDefault(size = 20) Pageable pageable) {
         if (!"ADMIN".equals(role)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        return ResponseEntity.ok(userService.listUsers(pageable));
+        return ResponseEntity.ok(userService.listUsers(search, pageable));
     }
 
     @GetMapping("/{id}")
@@ -42,5 +43,14 @@ public class AdminUserController {
             @RequestParam String newRole) {
         if (!"ADMIN".equals(role)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         return ResponseEntity.ok(userService.updateRole(id, newRole));
+    }
+
+    @PatchMapping("/{id}/active")
+    public ResponseEntity<UserDto> setActive(
+            @RequestHeader(value = "X-User-Role", defaultValue = "") String role,
+            @PathVariable UUID id,
+            @RequestParam boolean active) {
+        if (!"ADMIN".equals(role)) return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        return ResponseEntity.ok(userService.setActive(id, active));
     }
 }
